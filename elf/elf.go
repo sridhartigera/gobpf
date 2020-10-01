@@ -457,6 +457,7 @@ func (b *Module) relocate(data []byte, rdata []byte) error {
 		}
 
 		rinsn := (*C.struct_bpf_insn)(unsafe.Pointer(&rdata[offset]))
+		fmt.Println("rinsn ",rinsn.code)
 		if rinsn.code != (C.BPF_LD | C.BPF_IMM | C.BPF_DW) {
 			symbolSec := b.file.Sections[symbol.Section]
 
@@ -467,6 +468,7 @@ func (b *Module) relocate(data []byte, rdata []byte) error {
 		}
 
 		symbolSec := b.file.Sections[symbol.Section]
+		fmt.Println("reloc symbolSec ",symbolSec)
 		if !strings.HasPrefix(symbolSec.Name, "maps/") {
 			return fmt.Errorf("map location not supported: map %q is in section %q instead of \"maps/%s\"",
 				symbol.Name, symbolSec.Name, symbol.Name)
@@ -626,6 +628,7 @@ func (b *Module) Load(parameters map[string]SectionParams) error {
 					continue
 				}
 
+				fmt.Println("Adbout to call relocate ",rsection.Name)
 				err = b.relocate(data, rdata)
 				if err != nil {
 					return err
