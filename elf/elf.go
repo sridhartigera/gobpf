@@ -367,7 +367,7 @@ func elfReadMaps(file *elf.File, params map[string]SectionParams) (map[string]*M
 		if !strings.HasPrefix(section.Name, "maps/") {
 			continue
 		}
-
+		fmt.Println("elfReadMaps ", section.Name)
 		name := strings.TrimPrefix(section.Name, "maps/")
 		if oldMap, ok := maps[name]; ok {
 			return nil, fmt.Errorf("duplicate map: %q and %q", oldMap.Name, name)
@@ -381,6 +381,7 @@ func elfReadMaps(file *elf.File, params map[string]SectionParams) (map[string]*M
 			return nil, fmt.Errorf("only one map with size %d bytes allowed per section (check bpf_map_def)", C.sizeof_struct_bpf_map_def)
 		}
 
+		fmt.Println("elfReadMaps ", name)
 		mapDef := (*C.bpf_map_def)(unsafe.Pointer(&data[0]))
 
 		// check if the map size has to be changed
@@ -394,6 +395,7 @@ func elfReadMaps(file *elf.File, params map[string]SectionParams) (map[string]*M
 		if err != nil {
 			return nil, err
 		}
+		fmt.Println("elfReadMaps ", mapPath)
 		mapPathC := C.CString(mapPath)
 		defer C.free(unsafe.Pointer(mapPathC))
 
