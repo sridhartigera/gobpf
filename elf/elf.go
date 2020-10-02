@@ -506,7 +506,7 @@ func (b *Module) Load(parameters map[string]SectionParams) error {
 		b.fileReader = fileReader
 	}
 
-	fmt.Println("Filename: ", b.fileName)
+	//fmt.Println("Filename: ", b.fileName)
 	var err error
 	b.file, err = elf.NewFile(b.fileReader)
 	if err != nil {
@@ -518,7 +518,7 @@ func (b *Module) Load(parameters map[string]SectionParams) error {
 		return err
 	}
 
-	fmt.Println("License: ", license)
+	//fmt.Println("License: ", license)
 	lp := unsafe.Pointer(C.CString(license))
 	defer C.free(lp)
 
@@ -533,7 +533,7 @@ func (b *Module) Load(parameters map[string]SectionParams) error {
 		}
 	}
 
-	fmt.Println("version: ",version)
+	//fmt.Println("version: ",version)
 	maps, err := elfReadMaps(b.file, parameters)
 	if err != nil {
 		return err
@@ -557,14 +557,15 @@ func (b *Module) Load(parameters map[string]SectionParams) error {
 		}
 
 		if section.Type == elf.SHT_REL {
-			fmt.Println("Relocation sec name ", section.Name)
 			rsection := b.file.Sections[section.Info]
 
 			processed[i] = true
 			processed[section.Info] = true
 
 			secName := rsection.Name
-			fmt.Println(secName)
+			fmt.Println("Relocation sec name ", section.Name)
+			fmt.Println("Relocation rsec name ", secName)
+			//fmt.Println(secName)
 
 			isKprobe := strings.HasPrefix(secName, "kprobe/")
 			isKretprobe := strings.HasPrefix(secName, "kretprobe/")
@@ -625,6 +626,7 @@ func (b *Module) Load(parameters map[string]SectionParams) error {
 				}
 
 				if len(rdata) == 0 {
+					fmt.Println("rdata length 0")
 					continue
 				}
 
