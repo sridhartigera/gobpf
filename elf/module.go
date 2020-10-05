@@ -356,7 +356,7 @@ func (b *Module) EnableKprobe(secName string, maxactive int) error {
 		probeType = "p"
 		funcName = strings.TrimPrefix(secName, "kprobe/")
 	}
-	fmt.Println("probetype ", probetype)
+	fmt.Println("probetype ", probeType)
 	fmt.Println("funcName ", funcName)
 	eventName := probeType + funcName
 	fmt.Println("EventName ", eventName)
