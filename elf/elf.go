@@ -536,7 +536,7 @@ func (b *Module) Load(parameters map[string]SectionParams) error {
 		}
 	}
 
-	//fmt.Println("version: ",version)
+	fmt.Println("version1: ",version)
 	maps, err := elfReadMaps(b.file, parameters)
 	if err != nil {
 		return err
