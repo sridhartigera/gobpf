@@ -528,6 +528,7 @@ func (b *Module) Load(parameters map[string]SectionParams) error {
 	if err != nil {
 		return err
 	}
+	fmt.Println("version: ",version)
 	if version == useCurrentKernelVersion {
 		version, err = CurrentKernelVersion()
 		if err != nil {
