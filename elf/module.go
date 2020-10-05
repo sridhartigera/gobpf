@@ -257,6 +257,7 @@ func writeKprobeEvent(probeType, eventName, funcName, maxactiveStr string) (int,
 		return -1, fmt.Errorf("cannot write %q to kprobe_events: %v", cmd, err)
 	}
 
+	fmt.Println(cmd)
 	kprobeIdFile := fmt.Sprintf("/sys/kernel/debug/tracing/events/kprobes/%s/id", eventName)
 	kprobeIdBytes, err := ioutil.ReadFile(kprobeIdFile)
 	if err != nil {
@@ -270,7 +271,7 @@ func writeKprobeEvent(probeType, eventName, funcName, maxactiveStr string) (int,
 	if err != nil {
 		return -1, fmt.Errorf("invalid kprobe id: %v", err)
 	}
-
+	fmt.Println(kprobeId)
 	return kprobeId, nil
 }
 
