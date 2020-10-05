@@ -360,6 +360,7 @@ func (b *Module) EnableKprobe(secName string, maxactive int) error {
 	fmt.Println("funcName ", funcName)
 	eventName := probeType + funcName
 	fmt.Println("EventName ", eventName)
+	fmt.Println("MaxactiveStr ", maxactiveStr)
 
 	kprobeId, err := writeKprobeEvent(probeType, eventName, funcName, maxactiveStr)
 	// fallback without maxactive
